@@ -4,12 +4,15 @@ import (
 	"net/http"
 
 	"github.com/elisio-tech/jwt-autentication-go.git/internal/app/dto"
+	"github.com/elisio-tech/jwt-autentication-go.git/internal/database"
+	"github.com/elisio-tech/jwt-autentication-go.git/internal/domain/models"
+
 	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/bcrypt"
 )
 
-func Login(ctx *gin.Context) {
-	var req dto.LoginRequest
+func Register(ctx *gin.Context) {
+	var req dto.RegisterRequest
 	if err := ctx.ShouldBindJSON(&req); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
@@ -17,10 +20,24 @@ func Login(ctx *gin.Context) {
 
 	hashedPassword, _ := bcrypt.GenerateFromPassword([]byte(req.Password), 14)
 
-	ctx.JSON(200, gin.H{"message": "login"})
+	user := models.User{
+		Username: req.UserName,
+		Password: string(hashedPassword),
+	}
+
+	result := database.DB.Create(&user)
+	if result.Error != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Erro ao criar usuário"})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "Usuário criado com sucesso",
+		"user":    user,
+	})
 }
 
-func Register(ctx *gin.Context) {
+func Login(ctx *gin.Context) {
 	ctx.JSON(200, gin.H{"message": "login"})
 }
 

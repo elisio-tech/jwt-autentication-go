@@ -11,7 +11,7 @@ func main() {
 	r := gin.Default()
 	database.ConnectDB()
 
-	r.POST("/register", handlers.Login)
+	r.POST("/register", handlers.Register)
 	r.POST("/login", handlers.Login)
 
 	api := r.Group("/api")
