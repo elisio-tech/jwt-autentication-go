@@ -1,40 +1,48 @@
 # 🛡️ JWT Authentication API (Go + PostgreSQL)
 
-API de autenticação de alto desempenho construída com **Golang**, focada em segurança, escalabilidade e organização seguindo as melhores práticas de backend.
+![Go Version](https://img.shields.io/badge/Go-1.21+-00ADD8?style=for-the-badge&logo=go&logoColor=white)
+![Gin Framework](https://img.shields.io/badge/Gin-008080?style=for-the-badge&logo=go&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white)
+
+API de autenticação robusta e escalável desenvolvida em **Go**, utilizando o framework **Gin** e o ORM **GORM**. Este projeto foca em segurança de backend, implementando o fluxo completo de tokens JWT.
 
 ---
 
-## 🚀 Tecnologias
+## 🚀 Tecnologias Utilizadas
 
-| Tecnologia | Descrição |
-| :--- | :--- |
-| **Go (Golang)** | Linguagem principal de alta performance |
-| **Gin Gonic** | Web framework rápido e produtivo |
-| **PostgreSQL** | Banco de dados relacional robusto |
-| **GORM** | ORM para manipulação eficiente de dados |
-| **JWT (v5)** | Autenticação baseada em tokens seguros |
-| **Godotenv** | Gestão de variáveis de ambiente |
+* **Linguagem:** Go (Golang)
+* **Web Framework:** Gin Gonic
+* **Banco de Dados:** PostgreSQL
+* **ORM:** GORM
+* **Autenticação:** JWT (JSON Web Tokens)
+* **Configuração:** Godotenv para variáveis de ambiente
 
 ---
 
-## 📌 Funcionalidades
+## 📌 Funcionalidades Principal
 
-* ✅ **Auth:** Registro de usuários e Login com geração de JWT.
-* ✅ **Segurança:** Middleware para proteção de rotas privadas.
-* ✅ **Dados:** Validação rigorosa com DTOs (Data Transfer Objects).
-* ✅ **Persistência:** Integração completa com PostgreSQL via GORM.
-* ✅ **Arquitetura:** Estrutura de pastas organizada para fácil manutenção.
+* ✅ **Registro de Usuários:** Cadastro seguro com criptografia de senha.
+* ✅ **Login & JWT:** Geração de tokens de acesso para sessões seguras.
+* ✅ **Middleware de Autenticação:** Proteção de rotas privadas contra acessos não autorizados.
+* ✅ **Validação de Dados:** Uso de DTOs para garantir a integridade dos inputs.
+* ✅ **Arquitetura Limpa:** Organização de pastas seguindo padrões modernos de desenvolvimento Go.
 
 ---
 
-## 📂 Estrutura de Pastas
+## 📂 Estrutura do Projeto
 
 ```bash
 jwt-authentication-go/
-├── cmd/api/            # Ponto de entrada da aplicação
+├── cmd/
+│   └── api/                # Ponto de entrada (main.go)
 ├── internal/
-│   ├── app/            # Handlers (Controllers) e DTOs
-│   ├── domain/         # Modelos de dados (Entities)
-│   └── database/       # Configuração da conexão com DB
-├── middleware/         # Lógica de proteção JWT
-└── .env                # Variáveis sensíveis
+│   ├── app/
+│   │   ├── handlers/       # Controladores das rotas
+│   │   └── dto/            # Data Transfer Objects
+│   ├── domain/
+│   │   └── models/         # Modelos do Banco de Dados
+│   └── database/           # Configuração e conexão DB
+├── middleware/             # Interceptor de segurança JWT
+├── .env.example            # Template de variáveis de ambiente
+├── go.mod                  # Gerenciador de módulos Go
+└── README.md
