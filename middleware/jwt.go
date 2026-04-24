@@ -42,8 +42,8 @@ func ValidateToken() gin.HandlerFunc {
 			return
 		}
 
-		userID, exists := claims["user_id"]
-		if !exists {
+		userID, ok := claims["sub"].(string)
+		if !ok || userID == "" {
 			ctx.JSON(http.StatusUnauthorized, gin.H{"error": "Token sem user_id"})
 			ctx.Abort()
 			return
