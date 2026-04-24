@@ -29,9 +29,9 @@ func Register(ctx *gin.Context) {
 	}
 
 	user := models.User{
+		Email:    request.Email,
 		UserName: request.UserName,
 		Password: string(hashedPassword),
-		Email:    request.Email,
 	}
 
 	if err := database.DB.Create(&user).Error; err != nil {
@@ -78,7 +78,12 @@ func Login(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, gin.H{"token": tokenString})
+	ctx.JSON(http.StatusOK, gin.H{
+		"token": tokenString,
+		"name":  user.UserName,
+		"id":    user.ID,
+		"email": user.Email,
+	})
 }
 
 func Profile(ctx *gin.Context) {
