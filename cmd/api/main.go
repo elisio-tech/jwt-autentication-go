@@ -1,22 +1,23 @@
 package main
 
 import (
-	"net/http"
-
+	"github.com/elisio-tech/jwt-autentication-go.git/internal/app/handlers"
+	"github.com/elisio-tech/jwt-autentication-go.git/internal/database"
+	"github.com/elisio-tech/jwt-autentication-go.git/middleware"
 	"github.com/gin-gonic/gin"
-	"jwt-autentication-go.git/helper"
 )
 
 func main() {
-	router := gin.Default()
+	r := gin.Default()
+	database.ConnectDB()
 
-	router.GET("/", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusOK, "Welcome to JWT")
-	})
-	server := &http.Server{
-		Addr:    ":8080",
-		Handler: router,
+	r.POST("/register", handlers.Login)
+	r.POST("/login", handlers.Login)
+
+	api := r.Group("/api")
+	api.Use(middleware.ValidateToken())
+	{
+		api.GET("/profile", handlers.Profile)
 	}
-	err := server.ListenAndServe()
-	helper.ErrorPanic(err)
+	r.Run()
 }
