@@ -41,7 +41,11 @@ func Register(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusCreated, gin.H{
 		"message": "Usuário criado com sucesso",
-		"user":    gin.H{"id": user.ID, "username": user.UserName, "email": user.Email},
+		"user": dto.AuthResponse{
+			ID:       user.ID,
+			UserName: user.UserName,
+			Email:    user.Email,
+		},
 	})
 }
 
@@ -79,10 +83,13 @@ func Login(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, gin.H{
-		"token": tokenString,
-		"name":  user.UserName,
-		"id":    user.ID,
-		"email": user.Email,
+		"message": "usario logado com sucesso!",
+		"user": dto.AuthResponse{
+			ID:       user.ID,
+			UserName: user.UserName,
+			Email:    user.Email,
+			Token:    tokenString,
+		},
 	})
 }
 
